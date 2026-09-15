@@ -1,0 +1,24 @@
+config/credentials.json
+config/app_config.json
+config/accounts.json
+config/playwright_steam/
+config/playwright_buff/
+
+# 数据库与缓存
+config/app.db
+config/app.db-journal
+config/app.db-wal
+config/app.db-shm
+config/exchange_rate.json
+config/steam_userdata.json
+config/holdings_report_last.json
+config/transactions.json.bak
+
+# 日志
+log/
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
