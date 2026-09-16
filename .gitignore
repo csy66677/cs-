@@ -17,6 +17,9 @@ config/transactions.json.bak
 # 日志
 log/
 
+# 运行期标记文件
+.agreed_disclaimer
+
 # Python
 __pycache__/
 *.py[cod]

@@ -93,7 +93,7 @@
 <div align="center">
   <img src="./images/3.png" width="700" alt="Steam 游戏折扣面板展示">
   <br>
-  <sup>▲ 图：折扣雷达——按好评率与降价幅度动态排序的 Steam 游戏列表（图片预留位）</sup>
+  <sup>▲ 图：折扣雷达——按好评率与降价幅度动态排序的 Steam 游戏列表</sup>
 </div>
 
 ### 📊 完整的进销存数据分析
@@ -103,7 +103,7 @@
 <div align="center">
   <img src="./images/1.png" width="700" alt="进销存数据看板">
   <br>
-  <sup>▲ 图：直观的盈亏柱状图与综合余额转化率汇总看板（图片预留位）</sup>
+  <sup>▲ 图：直观的盈亏柱状图与综合余额转化率汇总看板</sup>
 </div>
 
 ---
@@ -137,8 +137,8 @@
 **第 1 步：克隆项目**
 
 ```bash
-git clone https://gitee.com/vexed-wilson/AetherSwap.git
-cd AetherSwap
+git clone https://gitcode.com/weixin_73387238/cs-.git
+cd cs-
 ```
 
 **第 2 步：安装依赖**
@@ -233,7 +233,7 @@ iflow 行情接口 → 折扣筛选 → 稳定性分析(CV/R²) → 防呆校验
 ## 🏗 项目结构
 
 ```
-AetherSwap/
+cs-/
 ├── app/                   # FastAPI 后端核心
 │   ├── main.py            # 应用入口 & 路由注册
 │   ├── pipeline_steps.py  # 采买 / 出售 Pipeline 逻辑

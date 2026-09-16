@@ -21,6 +21,22 @@ def _make_sellable():
     }]
 
 
+def _make_purchase_snapshot():
+    """与 _make_sellable 的 assetid 匹配的本地购买记录。
+
+    _build_listing_plan 会先校验物品是否在本地购买记录中（保护个人物品），
+    没有购买记录会直接跳过，走不到汇率检查分支；因此测试必须传入匹配的记录。
+    """
+    return [{
+        "name": "AK-47 | Redline",
+        "market_hash_name": "AK-47 | Redline",
+        "assetid": "12345678",
+        "price": 250.0,
+        "market_price": 300.0,
+        "listing": False,
+    }]
+
+
 def _build_ctx(logged_errors):
     """返回一个会把 log 调用追加到 logged_errors 列表的 MagicMock ctx。"""
     ctx = MagicMock()
@@ -55,7 +71,7 @@ def test_missing_rate_aborts_listing_plan():
             sellable=_make_sellable(),
             sell_strategy=1,
             pipeline_cfg={},
-            purchases_snapshot=[],
+            purchases_snapshot=_make_purchase_snapshot(),
             ok_listings=False,
             active_listing_ids=set(),
             listing_assetid_to_name={},
@@ -96,7 +112,7 @@ def test_valid_rate_converts_price():
             sellable=_make_sellable(),
             sell_strategy=1,
             pipeline_cfg={},
-            purchases_snapshot=[],
+            purchases_snapshot=_make_purchase_snapshot(),
             ok_listings=False,
             active_listing_ids=set(),
             listing_assetid_to_name={},

@@ -1,0 +1,104 @@
+diff --git a/.agreed_disclaimer b/.agreed_disclaimer
+deleted file mode 100644
+index e69de29..0000000
+diff --git a/.gitignore b/.gitignore
+index 7b74bf5..6bba78b 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -17,6 +17,9 @@ config/transactions.json.bak
+ # 日志
+ log/
+ 
++# 运行期标记文件
++.agreed_disclaimer
++
+ # Python
+ __pycache__/
+ *.py[cod]
+diff --git a/README.md b/README.md
+index 05b3292..2cc0338 100644
+--- a/README.md
++++ b/README.md
+@@ -93,7 +93,7 @@
+ <div align="center">
+   <img src="./images/3.png" width="700" alt="Steam 游戏折扣面板展示">
+   <br>
+-  <sup>▲ 图：折扣雷达——按好评率与降价幅度动态排序的 Steam 游戏列表（图片预留位）</sup>
++  <sup>▲ 图：折扣雷达——按好评率与降价幅度动态排序的 Steam 游戏列表</sup>
+ </div>
+ 
+ ### 📊 完整的进销存数据分析
+@@ -103,7 +103,7 @@
+ <div align="center">
+   <img src="./images/1.png" width="700" alt="进销存数据看板">
+   <br>
+-  <sup>▲ 图：直观的盈亏柱状图与综合余额转化率汇总看板（图片预留位）</sup>
++  <sup>▲ 图：直观的盈亏柱状图与综合余额转化率汇总看板</sup>
+ </div>
+ 
+ ---
+@@ -137,8 +137,8 @@
+ **第 1 步：克隆项目**
+ 
+ ```bash
+-git clone https://gitee.com/vexed-wilson/AetherSwap.git
+-cd AetherSwap
++git clone https://gitcode.com/weixin_73387238/cs-.git
++cd cs-
+ ```
+ 
+ **第 2 步：安装依赖**
+@@ -233,7 +233,7 @@ iflow 行情接口 → 折扣筛选 → 稳定性分析(CV/R²) → 防呆校验
+ ## 🏗 项目结构
+ 
+ ```
+-AetherSwap/
++cs-/
+ ├── app/                   # FastAPI 后端核心
+ │   ├── main.py            # 应用入口 & 路由注册
+ │   ├── pipeline_steps.py  # 采买 / 出售 Pipeline 逻辑
+diff --git a/tests/test_sell_pipeline_currency_guard.py b/tests/test_sell_pipeline_currency_guard.py
+index 07db37d..cb6d373 100644
+--- a/tests/test_sell_pipeline_currency_guard.py
++++ b/tests/test_sell_pipeline_currency_guard.py
+@@ -21,6 +21,22 @@ def _make_sellable():
+     }]
+ 
+ 
++def _make_purchase_snapshot():
++    """与 _make_sellable 的 assetid 匹配的本地购买记录。
++
++    _build_listing_plan 会先校验物品是否在本地购买记录中（保护个人物品），
++    没有购买记录会直接跳过，走不到汇率检查分支；因此测试必须传入匹配的记录。
++    """
++    return [{
++        "name": "AK-47 | Redline",
++        "market_hash_name": "AK-47 | Redline",
++        "assetid": "12345678",
++        "price": 250.0,
++        "market_price": 300.0,
++        "listing": False,
++    }]
++
++
+ def _build_ctx(logged_errors):
+     """返回一个会把 log 调用追加到 logged_errors 列表的 MagicMock ctx。"""
+     ctx = MagicMock()
+@@ -55,7 +71,7 @@ def test_missing_rate_aborts_listing_plan():
+             sellable=_make_sellable(),
+             sell_strategy=1,
+             pipeline_cfg={},
+-            purchases_snapshot=[],
++            purchases_snapshot=_make_purchase_snapshot(),
+             ok_listings=False,
+             active_listing_ids=set(),
+             listing_assetid_to_name={},
+@@ -96,7 +112,7 @@ def test_valid_rate_converts_price():
+             sellable=_make_sellable(),
+             sell_strategy=1,
+             pipeline_cfg={},
+-            purchases_snapshot=[],
++            purchases_snapshot=_make_purchase_snapshot(),
+             ok_listings=False,
+             active_listing_ids=set(),
+             listing_assetid_to_name={},
